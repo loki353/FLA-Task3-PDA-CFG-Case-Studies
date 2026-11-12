@@ -1,13 +1,26 @@
-# Grammar and PDA notes
+# Task 3 — Grammar and PDA Notes
 
-## Balanced brackets
-The grammar S → SS | (S) | [S] | {S} | () | [] | {} describes concatenation and nesting. A PDA pushes each opening bracket and pops only the matching opening symbol when it reads a closing bracket. It accepts when the input ends with an empty stack.
+## Case Study 1: If-Else Syntax
+The grammar uses:
+- S → M | U
+- M → iMeM | a
+- U → iS | iMeU
 
-## Arithmetic expressions
-The grammar E → E+E | E*E | (E) | id is ambiguous: an expression such as id+id*id can have different parse structures. The precedence grammar E → E+T | T; T → T*F | F; F → (E) | id gives multiplication higher precedence than addition.
+Here, `i` represents an if statement, `e` represents else, and `a` represents an action. Matched and unmatched productions handle nested if-else structures.
 
-## Palindromes
-S → aSa | bSb | a | b | ε generates palindromes over {a,b}. If a separator c is inserted between the two halves, a deterministic PDA can use it to identify the midpoint. Without a marker, a PDA can nondeterministically guess the midpoint.
+## Case Study 2: Requests and Acknowledgements
+The language is **L = { aⁿb²ⁿ : n ≥ 1 }**.
+- S → aSbb | abb
 
-## PDA versus DFA
-The stack stores an unbounded sequence of unmatched opening symbols, which finite-state control alone cannot do.
+For every input `a`, the PDA pushes two stack markers. For every `b`, it pops one marker. It accepts when the input has at least one `a`, all `a` symbols precede the `b` symbols, and the stack returns to its base marker.
+
+## Case Study 3: Balanced Binary Strings
+The language contains strings over {0,1} with equal counts of both symbols.
+- S → 1X0S | 0Y1S | ε
+- X → 1X0X | ε
+- Y → 0Y1Y | ε
+
+The PDA cancels an unmatched 0 when it reads a 1, or an unmatched 1 when it reads a 0. Otherwise, it stores the current symbol. It accepts when only the bottom-of-stack marker remains.
+
+## PDA and CFG
+A CFG describes how strings in a context-free language can be generated. A PDA recognizes such languages by using a stack to remember information that a finite automaton cannot store.
